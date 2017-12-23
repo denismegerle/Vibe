@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src * &apos;unsafe-inline&apos;; style-src &apos;self&apos; &apos;unsafe-inline&apos;; media-src *">
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-1.5.0.mobile.min.css">
+	<style>
+		/* For avoiding title truncation in wp8 */
+		.ui-header .ui-title {
+				overflow: visible !important;
+		}
+		/* For fixing the absolute position issue for the default cordova gen page*/
+		#cjp-accordion1 .app {
+				left: 5px !important;
+				margin: 5px !important;
+				position: relative !important;
+		}
+	</style>
+	
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js" id="cordova-jquery"></script>
+	<script type="text/javascript" id="jqm-trans-disable">
+		/* For having a faster transition */
+		$(document).on("mobileinit", function() {
+				$.mobile.defaultPageTransition = "none";
+				$.mobile.defaultDialogTransition = "none";
+		});
+		</script><script type="text/javascript" src="js/jquery-1.5.0.mobile.min.js"></script><script type="text/javascript" src="js/index.js"></script><script type="text/javascript">
+        app.initialize();
+    </script>
+    <script id="paneljs">
+		$(function() {
+			try{$( "body>[data-role=\'panel\']" ).panel();}catch(e){}
+		});
+    </script>
+    
+    <title>Vibe</title>
+</head>
+
+<body>
+	<!-- ********** HOME  PAGE! ********** -->
+	<div id="home-page" data-url="home-page" data-role="page" data-theme="a" class="background-content">
+    	<div data-role="header" data-theme="b" data-position="fixed">
+        	<h1></h1>
+        	<a class="ui-icon-nodisc" href="#left-panel" data-iconpos="notext" data-icon="arrow-r" data-theme="d" data-iconshadow="false" data-shadow="false">Open left panel</a>
+        	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
+    	</div>
+    	
+    	<div data-role="content" data-position="fixed">
+    	<ul data-role="listview" data-inset="false">
+    		<li><a href="#">Acura</a></li>
+    		<li><a href="#">Audi</a></li>
+    		<li><a href="#">BMW</a></li>
+    		<li><a href="#">Cadillac</a></li>
+    		<li><a href="#">Ferrari</a></li>
+		</ul>
+		
+		<button id="getOrientation" onclick="getOrientation()">GET ORIENTATION</button>
+		<button id="watchOrientation" onclick="watchOrientation()">WATCH ORIENTATION</button>
+		
+    	</div>
+    </div>
+	<!-- ********************************* -->
+	
+	<!-- ********** MAP   PAGE! ********** -->
+	<div id="map-page" data-url="map-page" data-role="page" data-theme="a" class="background-content">
+    	<div data-role="header" data-theme="b" data-position="fixed">
+        	<h1>Swipe left or right</h1>
+        	<a class="ui-icon-nodisc" href="#left-panel" data-iconpos="notext" data-icon="arrow-r" data-theme="d" data-iconshadow="false" data-shadow="false">Open left panel</a>
+        	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
+    	</div>
+    	
+    	<div data-role="content" data-position="fixed">
+    	<ul data-role="listview" data-inset="false">
+    		<li><a href="#">Acura</a></li>
+    		<li><a href="#">Audi</a></li>
+    		<li><a href="#">BMW</a></li>
+    		<li><a href="#">Cadillac</a></li>
+    		<li><a href="#">FERRINA</a></li>
+		</ul>
+		
+		
+    	</div>
+    </div>
+	<!-- ********************************* -->
+	
+	<!-- ********** COMP  PAGE! ********** -->
+	<div id="comp-page" data-url="comp-page" data-role="page" data-theme="a" class="background-content">
+    	<div data-role="header" data-theme="b" data-position="fixed">
+        	<h1>Swipe left or right</h1>
+        	<a class="ui-icon-nodisc" href="#left-panel" data-iconpos="notext" data-icon="arrow-r" data-theme="d" data-iconshadow="false" data-shadow="false">Open left panel</a>
+        	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
+    	</div>
+    	
+    	<div class="compass">
+    		<div class="compassarrow"></div>
+    		<div class="compassdiscbg">
+    		<div id="compassdisc" class="compassdisc">
+    			
+    			<div id="north" class="north">N</div>
+    			<div id="east" class="east">E</div>
+    			<div id="south" class="south">S</div>
+    			<div id="west" class="west">W</div>
+    			</div>
+    		</div>
+    	</div>
+    	
+    	<div class="orientation-data">	
+    		<div>Alpha<span id="alphashow"></span></div>
+    		<div>Beta<span id="betashow"></span></div>
+    		<div>Gamma<span id="gammashow"></span></div>
+    	</div>
+    </div>
+	<!-- ********************************* -->
+	
+	<!-- ********** CONN  PAGE! ********** -->
+	<div id="conn-page" data-url="conn-page" data-role="page" data-theme="a" class="background-content">
+    	<div data-role="header" data-theme="b" data-position="fixed">
+        	<h1>Swipe left or right</h1>
+        	<a class="ui-icon-nodisc" href="#left-panel" data-iconpos="notext" data-icon="arrow-r" data-theme="d" data-iconshadow="false" data-shadow="false">Open left panel</a>
+        	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
+    	</div>
+    	
+    	<div data-role="content" data-position="fixed">
+    	<ul data-role="listview" data-inset="false">
+    		<li><a href="#">Acura</a></li>
+    		<li><a href="#">Audi</a></li>
+    		<li><a href="#">BMW</a></li>
+    		<li><a href="#">Cadillac</a></li>
+    		<li><a href="#">FERRORI</a></li>
+		</ul>
+    	</div>
+    </div>
+	<!-- ********************************* -->
+	
+	<!-- HERE ALL PAGES; THEN THIS: -->
+	<div id="overlay" class="overlay"></div>
+	
+	<!-- ********** LEFT PANEL! ********** -->
+	<div id="left-panel" data-role="panel" data-theme="a" data-position="left" data-display="overlay" data-position-fixed="true">
+		<div id="navbar-image" class="navbar-header">
+			<img src="img/navbar-header.jpg">
+			<center><b>©Vibe!</b></center>
+		</div>
+		
+		<ul data-role="listview" data-divider-theme="b" data-icon="false" data-rel="close" class="navmenu">
+    		<li><a href="#home-page" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a></li>
+    		<li data-role="list-divider">Allgemein</li>
+    		<li><a href="#map-page" class="ui-btn ui-icon-navigation ui-btn-icon-left">Map</a></li>
+    		<li><a href="#comp-page" class="ui-btn ui-icon-search ui-btn-icon-left">Compass</a></li>
+    		<li><a href="#conn-page" class="ui-btn ui-icon-recycle ui-btn-icon-left">Connection</a></li>
+    		<li data-role="list-divider">Erweitert</li>
+    		<li><a href="#set-page" class="ui-btn ui-icon-gear ui-btn-icon-left">Settings</a></li>
+    		<li><a href="#abt-page" class="ui-btn ui-icon-info ui-btn-icon-left">Help & About</a></li>
+		</ul>		
+    </div>
+	<!-- ********************************* -->
+	
+</body>
+
+</html>

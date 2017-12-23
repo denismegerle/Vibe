@@ -1,0 +1,73 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        }
+    }
+}
