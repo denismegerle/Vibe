@@ -70,6 +70,21 @@ div.console-row span:nth-child(2){left: 150px;}
 	overflow: hidden;
 }
 
+.waypointsign {
+	position: absolute;
+	z-index: 300;
+	width: 50px;
+	height: 50px;
+	background: red;
+}
+
+.waypointsign-circle {
+	position: absolute;
+	z-index: 290;
+	width: 260px;
+	height: 260px;
+}
+
 .compass .compassdiscbg .compassdisc {
 	position: absolute;
 	z-index: 200;

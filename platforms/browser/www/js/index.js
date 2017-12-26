@@ -31,6 +31,12 @@ var nextWaypoint = {
 	dir: "N/A"
 };
 
+var orientationAbsolute = {
+	alpha: "N/A",
+	beta: "N/A",
+	gamma: "N/A"
+}
+
 var touchScroll = function( event ) {
     event.preventDefault();
 };
@@ -102,6 +108,13 @@ function parseCoordinateText(input) {
 function updateNextWaypoint() {
 	nextWaypoint.dist = airlineDistanceOf(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
 	nextWaypoint.dir = degreeBetween(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
+	
+	var waypointDisc = document.getElementById("waypointsign-circle");
+	var correctionOffset = 45.0;
+	var userGoDir = correctionOffset + orientationAbsolute.alpha - nextWaypoint.dir;
+   	waypointDisc.style.webkitTransform = "rotate("+ userGoDir +"deg)";
+   	waypointDisc.style.MozTransform = "rotate("+ userGoDir +"deg)";
+   	waypointDisc.style.transform = "rotate("+ userGoDir +"deg)";
 }
 
 function toRad(value) {
@@ -178,13 +191,10 @@ var app = {
         	}, true);
         	window.addEventListener("deviceorientationabsolute", function(event) {
         		// update compass all the time...
-        		var compassdir = event.alpha;
-     		
-        		document.getElementById("alphashow").innerHTML = Math.ceil(event.alpha);
-        		var compassDisc = document.getElementById("compassdisc");
-     	      	compassDisc.style.webkitTransform = "rotate("+ event.alpha +"deg)";
-     	      	compassDisc.style.MozTransform = "rotate("+ event.alpha +"deg)";
-     	      	compassDisc.style.transform = "rotate("+ event.alpha +"deg)";
+        		
+        		orientationAbsolute.alpha = event.alpha;
+        		orientationAbsolute.beta = event.beta;
+        		orientationAbsolute.gamma = event.gamma;
         	}, true);
         	
         	// update variables in html
@@ -194,7 +204,17 @@ var app = {
         		document.getElementById("console-nextwpdir").innerHTML = nextWaypoint.dir;
         		document.getElementById("console-nextwpdist").innerHTML = nextWaypoint.dist;
         		updateNextWaypoint();
-        	}, 500);
+        	}, 100);
+        	// update compass
+        	setInterval(function() {
+        		var compassdir = orientationAbsolute.alpha;
+         		
+        		document.getElementById("alphashow").innerHTML = Math.ceil(compassdir);
+        		var compassDisc = document.getElementById("compassdisc");
+     	      	compassDisc.style.webkitTransform = "rotate("+ compassdir +"deg)";
+     	      	compassDisc.style.MozTransform = "rotate("+ compassdir +"deg)";
+     	      	compassDisc.style.transform = "rotate("+ compassdir +"deg)";
+        	}, 50);
         }, false);
     },
     // deviceready Event Handler
