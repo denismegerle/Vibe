@@ -17,6 +17,20 @@
  * under the License.
  */
 
+var deviceLocation = {
+	str: "N/A",
+	latitude: "N/A",
+	longitude: "N/A"
+};
+
+var nextWaypoint = {
+	str: "N/A",
+	latitude: "N/A",
+	longitude: "N/A",
+	dist: "N/A",
+	dir: "N/A"
+};
+
 var touchScroll = function( event ) {
     event.preventDefault();
 };
@@ -45,25 +59,100 @@ $( document ).on( "pageinit", "#home-page", function() {
     $("#left-panel").on("panelbeforeclose",function(){
         $("#overlay").hide();
     });
-    
-    initializeComp();
 });
 
-function initializeComp() {
-	// initing compass listener
-	window.addEventListener("compassneedscalibration", function(event) {
-	       event.preventDefault();
-	}, true);
-	window.addEventListener("deviceorientationabsolute", function(event) {
-		// update compass all the time...
-		var compassdir = event.alpha;
+function onWaypointButton() {
+	var input = String(document.getElementById("waypointInput").value);
+	
+	// check if input are coordinates
+	if (!representsCoordinates(input)) {
+		alert("No coordinates in textfield...");
+		return;
+	}
 		
-		document.getElementById("alphashow").innerHTML = Math.ceil(event.alpha);
-		var compassDisc = document.getElementById("compassdisc");
-	      	compassDisc.style.webkitTransform = "rotate("+ event.alpha +"deg)";
-	      	compassDisc.style.MozTransform = "rotate("+ event.alpha +"deg)";
-	      	compassDisc.style.transform = "rotate("+ event.alpha +"deg)";
-	}, true);	
+	var coords = parseCoordinateText(input);
+	nextWaypoint.str = input;
+	nextWaypoint.latitude = coords.latitude;
+	nextWaypoint.longitude = coords.longitude;
+	
+	document.getElementById("console-nextwpcoords").innerHTML = nextWaypoint.str;
+}
+
+function representsCoordinates(input) {
+	var regexCoords = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+	var regexMatch = input.match(regexCoords);
+	
+	if (regexMatch !== null)
+		return true;
+	return false;
+}
+
+function parseCoordinateText(input) {
+	var strCoords = input.split(',');
+	var coords = new Object();
+	
+	coords.str = input;
+	coords.latitude = parseFloat(strCoords[0]);
+	coords.longitude = parseFloat(strCoords[1]);
+	
+	return coords;
+}
+
+// updates next wp except actual lat/long!
+function updateNextWaypoint() {
+	nextWaypoint.dist = airlineDistanceOf(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
+	nextWaypoint.dir = degreeBetween(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
+}
+
+function toRad(value) {
+    return value * Math.PI / 180;
+}
+
+function toDeg(value) {
+	return value * 180 / Math.PI;
+}
+
+function airlineDistanceOf(lat1, long1, lat2, long2) {
+	var R = 6371e3; // metres
+	var φ1 = toRad(lat1);
+	var φ2 = toRad(lat2);
+	var Δφ = toRad(lat2 - lat1);
+	var Δλ = toRad(long2 - long1);
+
+	var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+	        Math.cos(φ1) * Math.cos(φ2) *
+	        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	var d = R * c;
+	
+	return d;
+}
+
+function degreeBetween(lat1, long1, lat2, long2) {
+	var φ1 = toRad(lat1);
+	var φ2 = toRad(lat2);
+	var Δφ = toRad(lat2 - lat1);
+	var Δλ = toRad(long2 - long1);
+
+    var y = Math.sin(Δλ) * Math.cos(φ2);
+    var x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1)
+            * Math.cos(φ2) * Math.cos(Δλ);
+
+    var brng = Math.atan2(y, x);
+
+    brng = toDeg(brng);
+    brng = (brng + 360) % 360;
+    brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+    return brng;
+}
+
+function getFacingDir(ev) {
+	return ev.alpha;
+}
+
+function calcUserGoDirTo(facingDir, waypointDir) {
+	
 }
 
 var app = {
@@ -76,7 +165,37 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('deviceready', function() {
+        	// update location all the time...
+        	var locationWatchID = navigator.geolocation.watchPosition(function(position) {
+        		deviceLocation.latitude = position.coords.latitude;
+        		deviceLocation.longitude = position.coords.longitude;
+        	}, function() {}, {enableHighAccuracy: true, frequency: 1 });
+        	
+        	// update device orientation constantly...
+        	window.addEventListener("compassneedscalibration", function(event) {
+     	       event.preventDefault();
+        	}, true);
+        	window.addEventListener("deviceorientationabsolute", function(event) {
+        		// update compass all the time...
+        		var compassdir = event.alpha;
+     		
+        		document.getElementById("alphashow").innerHTML = Math.ceil(event.alpha);
+        		var compassDisc = document.getElementById("compassdisc");
+     	      	compassDisc.style.webkitTransform = "rotate("+ event.alpha +"deg)";
+     	      	compassDisc.style.MozTransform = "rotate("+ event.alpha +"deg)";
+     	      	compassDisc.style.transform = "rotate("+ event.alpha +"deg)";
+        	}, true);
+        	
+        	// update variables in html
+        	setInterval(function() {
+        		document.getElementById("console-dest").innerHTML = nextWaypoint.str;
+        		document.getElementById("console-nextwpcoords").innerHTML = nextWaypoint.str;
+        		document.getElementById("console-nextwpdir").innerHTML = nextWaypoint.dir;
+        		document.getElementById("console-nextwpdist").innerHTML = nextWaypoint.dist;
+        		updateNextWaypoint();
+        	}, 500);
+        }, false);
     },
     // deviceready Event Handler
     //

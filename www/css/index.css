@@ -43,6 +43,21 @@ img {
 
 .noscroll { overflow: hidden; }
 
+div.console-row span{position: absolute;}
+div.console-row span:nth-child(1){left: 0px;}
+div.console-row span:nth-child(2){left: 150px;}
+
+.console-data {
+	padding-left: 2em;
+}
+.console-info {
+	color: red;
+}
+
+.console-info-content {
+	color: black;
+}
+
 .compass {
 	position: relative;
 	width: 260px;

@@ -133,9 +133,19 @@
     	
     	<div class="orientation-data">	
     		<div>Alpha<span id="alphashow"></span></div>
-    		<div>Beta<span id="betashow"></span></div>
-    		<div>Gamma<span id="gammashow"></span></div>
     	</div>
+    	
+    	<div class="waypoint-data">
+    		<div class="console-data">
+    			<div><span class="console-info">[Destination]</span><span id="console-dest" class="console-info-content">N/A</span></div>
+    			<div><span class="console-info">[NextWP:coords]</span><span id="console-nextwpcoords" class="console-info-content">N/A</span></div>
+    			<div><span class="console-info">[NextWP:dir]</span><span id="console-nextwpdir" class="console-info-content">N/A</span></div>
+    			<div><span class="console-info">[NextWP:dist]</span><span id="console-nextwpdist" class="console-info-content">N/A</span></div>
+    		</div>
+    		<input type="text" name="testwaypoint" id="waypointInput" value="standard">
+    		<button onclick="onWaypointButton()">Navigate</button>
+    	</div>
+    	
     </div>
 	<!-- ********************************* -->
 	
