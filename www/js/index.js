@@ -37,13 +37,21 @@ var orientationAbsolute = {
 	gamma: "N/A"
 }
 
+var gRouteLeg;
+
+var curStep = 0;
+
+var countSteps = false;
+
+var map; // gmaps map
+var marker; // gmaps marker
+
 var touchScroll = function( event ) {
     event.preventDefault();
 };
 var body = document.body,
 overlay = document.querySelector('.overlay');
 
-/* -----------INITIALIZE------------- */
 $( document ).on( "pageinit", "#home-page", function() {
 	$("#left-panel").panel().enhanceWithin();	// init global panel before start
 	$("#overlay").hide();		// hide the overlay at start
@@ -67,7 +75,21 @@ $( document ).on( "pageinit", "#home-page", function() {
     });
 });
 
+function initMap() {
+    var uluru = {lat: -25.363, lng: 131.044};
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 6,
+      center: uluru
+    });
+    marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+  }
+
 function onWaypointButton() {
+	curStep = 0;
+	countSteps = false;
 	var input = String(document.getElementById("waypointInput").value);
 	
 	// check if input are coordinates
@@ -77,11 +99,60 @@ function onWaypointButton() {
 	}
 		
 	var coords = parseCoordinateText(input);
-	nextWaypoint.str = input;
+	setNextWaypoint(coords);
+}
+
+function createDirectionsRequest() {
+	var input = String(document.getElementById("waypointInput").value),
+		gmapsUrl = "https://maps.googleapis.com/maps/api/directions/",
+		outputFormat = "json?";
+		origin = "origin=" + deviceLocation.latitude + "," + deviceLocation.longitude,
+		destination = "destination=" + parseInputToRequest(input),
+		apikey = "key=" + "API_KEY",
+		parameters = origin + "&" + destination + "&" + apikey;
+	
+	return gmapsUrl + outputFormat + parameters;
+}
+
+function onRouteButton() {
+	curStep = 0;
+	countSteps = true;
+	var request = createDirectionsRequest();
+	
+	alert(request);
+	
+	$.getJSON(request, function(data) {
+		gRouteLeg = data.routes[0].legs[0];
+		
+		var coords = new Object();
+		coords.str = gRouteLeg.steps[0].html_instructions;
+		coords.latitude = gRouteLeg.steps[0].end_location.lat;
+		coords.longitude = gRouteLeg.steps[0].end_location.lng;
+		
+		setNextWaypoint(coords);
+	});
+}
+
+function parseInputToRequest(input) {
+	if (representsCoordinates(input))
+		return input.replace(/ /g, '');
+	return input.trim().replace(/ /g, '+');
+}
+
+function setNextWaypoint(coords) {
+	if (coords.latitude === null || coords.longitude === null)
+		return;
+	nextWaypoint.str = coords.str;
 	nextWaypoint.latitude = coords.latitude;
 	nextWaypoint.longitude = coords.longitude;
 	
-	document.getElementById("console-nextwpcoords").innerHTML = nextWaypoint.str;
+	var gpos = { lat: nextWaypoint.latitude, lng: nextWaypoint.longitude };
+	marker.setMap(null);
+	marker = new google.maps.Marker({
+		position: gpos,
+	    map: map
+	});
+	map.setCenter(gpos);
 }
 
 function representsCoordinates(input) {
@@ -108,13 +179,6 @@ function parseCoordinateText(input) {
 function updateNextWaypoint() {
 	nextWaypoint.dist = airlineDistanceOf(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
 	nextWaypoint.dir = degreeBetween(deviceLocation.latitude, deviceLocation.longitude, nextWaypoint.latitude, nextWaypoint.longitude);
-	
-	var waypointDisc = document.getElementById("waypointsign-circle");
-	var correctionOffset = 45.0;
-	var userGoDir = correctionOffset + orientationAbsolute.alpha - nextWaypoint.dir;
-   	waypointDisc.style.webkitTransform = "rotate("+ userGoDir +"deg)";
-   	waypointDisc.style.MozTransform = "rotate("+ userGoDir +"deg)";
-   	waypointDisc.style.transform = "rotate("+ userGoDir +"deg)";
 }
 
 function toRad(value) {
@@ -190,20 +254,30 @@ var app = {
      	       event.preventDefault();
         	}, true);
         	window.addEventListener("deviceorientationabsolute", function(event) {
-        		// update compass all the time...
-        		
+        		// update compass orientation data all the time...
         		orientationAbsolute.alpha = event.alpha;
         		orientationAbsolute.beta = event.beta;
         		orientationAbsolute.gamma = event.gamma;
         	}, true);
         	
+        	google.maps.event.addListener(map, "idle", function(){
+                google.maps.event.trigger(map, 'resize'); 
+            });
+        	
+        	
         	// update variables in html
         	setInterval(function() {
         		document.getElementById("console-dest").innerHTML = nextWaypoint.str;
-        		document.getElementById("console-nextwpcoords").innerHTML = nextWaypoint.str;
+        		document.getElementById("console-nextwpcoords").innerHTML = nextWaypoint.latitude + "," + nextWaypoint.longitude;
         		document.getElementById("console-nextwpdir").innerHTML = nextWaypoint.dir;
         		document.getElementById("console-nextwpdist").innerHTML = nextWaypoint.dist;
         		updateNextWaypoint();
+        		
+        		if (countSteps) {
+        			if (nextWaypoint.dist < 50.0) {
+        				reachedNextWaypoint();
+        			}
+        		}
         	}, 100);
         	// update compass
         	setInterval(function() {
@@ -214,6 +288,14 @@ var app = {
      	      	compassDisc.style.webkitTransform = "rotate("+ compassdir +"deg)";
      	      	compassDisc.style.MozTransform = "rotate("+ compassdir +"deg)";
      	      	compassDisc.style.transform = "rotate("+ compassdir +"deg)";
+     	      	
+     	      	
+     	      	var waypointDisc = document.getElementById("waypointsign-circle");
+     	      	var correctionOffset = 45.0;
+     	      	var userGoDir = correctionOffset + orientationAbsolute.alpha - nextWaypoint.dir;
+     	      	waypointDisc.style.webkitTransform = "rotate("+ userGoDir +"deg)";
+     	      	waypointDisc.style.MozTransform = "rotate("+ userGoDir +"deg)";
+     	      	waypointDisc.style.transform = "rotate("+ userGoDir +"deg)";
         	}, 50);
         }, false);
     },
@@ -236,6 +318,19 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+function reachedNextWaypoint() {
+	if (curStep + 1 < gRouteLeg.steps.length) {
+		curStep++;
+		var coords = new Object();
+		coords.str = gRouteLeg.steps[curStep].html_instructions;
+		coords.latitude = gRouteLeg.steps[curStep].end_location.lat;
+		coords.longitude = gRouteLeg.steps[curStep].end_location.lng;
+		setNextWaypoint(coords);
+		
+		// make green for a few secs or vibrate bluetooth device
+	}
+}
 
 function startCompass() {
 	window.addEventListener("compassneedscalibration",function(event) {

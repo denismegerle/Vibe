@@ -45,6 +45,7 @@
 	
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js" id="cordova-jquery"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"></script>
 	<script type="text/javascript" id="jqm-trans-disable">
 		/* For having a faster transition */
 		$(document).on("mobileinit", function() {
@@ -96,17 +97,8 @@
         	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
     	</div>
     	
-    	<div data-role="content" data-position="fixed">
-    	<ul data-role="listview" data-inset="false">
-    		<li><a href="#">Acura</a></li>
-    		<li><a href="#">Audi</a></li>
-    		<li><a href="#">BMW</a></li>
-    		<li><a href="#">Cadillac</a></li>
-    		<li><a href="#">FERRINA</a></li>
-		</ul>
+    	<div id="map"></div>
 		
-		
-    	</div>
     </div>
 	<!-- ********************************* -->
 	
@@ -143,7 +135,7 @@
     			<div><span class="console-info">[NextWP:dist]</span><span id="console-nextwpdist" class="console-info-content">N/A</span></div>
     		</div>
     		<input type="text" name="testwaypoint" id="waypointInput" value="standard">
-    		<button onclick="onWaypointButton()">Navigate</button>
+    		<button onclick="onWaypointButton()" class="navibutton">Navigate</button><button onclick="onRouteButton()" class="navibutton">Route</button>
     	</div>
     	
     </div>

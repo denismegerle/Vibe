@@ -85,6 +85,19 @@ div.console-row span:nth-child(2){left: 150px;}
 	height: 260px;
 }
 
+.waypoint-data .navibutton {
+	display:inline-block;
+	background: #000;
+	width: 50%;
+}
+
+#map {
+	position: absolute;
+	width: 80%;
+	height: 80%;
+	margin: 10%;
+}
+       
 .compass .compassdiscbg .compassdisc {
 	position: absolute;
 	z-index: 200;
