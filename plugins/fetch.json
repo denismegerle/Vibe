@@ -174,5 +174,13 @@
     },
     "is_top_level": false,
     "variables": {}
+  },
+  "cordova.plugins.diagnostic": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/dpa99c/cordova-diagnostic-plugin.git"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

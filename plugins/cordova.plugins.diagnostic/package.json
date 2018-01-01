@@ -1,0 +1,66 @@
+{
+  "_from": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+  "_id": "cordova.plugins.diagnostic@3.8.1",
+  "_inBundle": false,
+  "_integrity": "sha1-lwKm26bbXfezNeIbGaNiO9zHitA=",
+  "_location": "/cordova.plugins.diagnostic",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+    "rawSpec": "https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+    "saveSpec": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+    "fetchSpec": "https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+    "gitCommittish": "master"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git#1dadb908a66bea1568664cccaf62205bf0095f21",
+  "_spec": "https://github.com/dpa99c/cordova-diagnostic-plugin.git",
+  "_where": "C:\\Users\\Chippy\\Documents\\Study\\KIT\\Mobile Computing und Internet der Dinge\\Vibe",
+  "author": {
+    "name": "Dave Alden"
+  },
+  "bugs": {
+    "url": "https://github.com/dpa99c/cordova-diagnostic-plugin/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova.plugins.diagnostic",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "cordova_name": "Diagnostic",
+  "deprecated": false,
+  "description": "Cordova/Phonegap plugin to check the state of Location/WiFi/Camera/Bluetooth device settings.",
+  "homepage": "https://github.com/dpa99c/cordova-diagnostic-plugin#readme",
+  "issue": "https://github.com/dpa99c/cordova-diagnostic-plugin/issues",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova",
+    "android",
+    "ios",
+    "windows",
+    "phonegap",
+    "diagnostic",
+    "wifi",
+    "location",
+    "gps",
+    "camera",
+    "bluetooth",
+    "settings"
+  ],
+  "license": "MIT",
+  "name": "cordova.plugins.diagnostic",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git"
+  },
+  "types": "./cordova.plugins.diagnostic.d.ts",
+  "version": "3.8.1"
+}

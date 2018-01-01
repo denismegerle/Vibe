@@ -10,10 +10,10 @@
         "cordova-plugin-battery-status": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         },
-        "cordova-plugin-camera": {
+        "cordova-plugin-ble-central": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         },
-        "cordova-plugin-media-capture": {
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         },
         "cordova-plugin-console": {
@@ -49,6 +49,9 @@
         "cordova-plugin-media": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         },
@@ -63,9 +66,15 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
         }
     },
     "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "kit.edu.informatik.megerle"
+        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "kit.edu.informatik.megerle"
         }

@@ -602,6 +602,22 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-ble-central/www/ble.js",
+        "id": "cordova-plugin-ble-central.ble",
+        "pluginId": "cordova-plugin-ble-central",
+        "clobbers": [
+            "ble"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-ble-central/src/browser/BLECentralPlugin.js",
+        "id": "cordova-plugin-ble-central.BLECentralPlugin",
+        "pluginId": "cordova-plugin-ble-central",
+        "merges": [
+            "ble"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -626,7 +642,10 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-vibration": "2.1.6",
-    "cordova-plugin-whitelist": "1.2.2"
+    "cordova-plugin-whitelist": "1.2.2",
+    "cordova-plugin-ble-central": "1.1.4",
+    "cordova.plugins.diagnostic": "3.8.1",
+    "cordova-plugin-compat": "1.2.0"
 }
 // BOTTOM OF METADATA
 });

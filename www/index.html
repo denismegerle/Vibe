@@ -45,14 +45,15 @@
 	
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js" id="cordova-jquery"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl8I_p4nwHLob5Urz1yVIwuvrU6jei1tQ&callback=initMap"></script>
 	<script type="text/javascript" id="jqm-trans-disable">
 		/* For having a faster transition */
 		$(document).on("mobileinit", function() {
 				$.mobile.defaultPageTransition = "none";
 				$.mobile.defaultDialogTransition = "none";
 		});
-		</script><script type="text/javascript" src="js/jquery-1.5.0.mobile.min.js"></script><script type="text/javascript" src="js/index.js"></script><script type="text/javascript">
+		</script><script type="text/javascript" src="js/jquery-1.5.0.mobile.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script><script type="text/javascript">
         app.initialize();
     </script>
     <script id="paneljs">
@@ -73,17 +74,33 @@
         	<a class="ui-icon-nodisc" href="#right-panel" data-iconpos="notext" data-icon="arrow-l" data-theme="d" data-iconshadow="false" data-shadow="false">Open right panel</a>
     	</div>
     	
-    	<div data-role="content" data-position="fixed">
-    	<ul data-role="listview" data-inset="false">
-    		<li><a href="#">Acura</a></li>
-    		<li><a href="#">Audi</a></li>
-    		<li><a href="#">BMW</a></li>
-    		<li><a href="#">Cadillac</a></li>
-    		<li><a href="#">Ferrari</a></li>
-		</ul>
-		
-		<button id="getOrientation" onclick="getOrientation()">GET ORIENTATION</button>
-		<button id="watchOrientation" onclick="watchOrientation()">WATCH ORIENTATION</button>
+    	<div data-role="content" data-position="fixed" class="home-stati">
+        <div id="status-internet" class="statusmsg">
+          <h3>Internet</h3>
+          <h4><span id="statusmsg-internet">false</span></h4>
+        </div>
+        
+        <div id="status-bluetooth" class="statusmsg">
+          <h3>Bluetooth</h3>
+          <h4><span id="statusmsg-bluetooth">false</span></h4>
+        </div>
+        
+        <div id="status-geo" class="statusmsg">
+          <h3>Geolocation</h3>
+          <h4><span id="statusmsg-geo">false</span></h4>
+        </div>
+        
+        <div id="status-map" class="statusmsg">
+          <h3>Kartenstatus</h3>
+          <h4><span id="statusmsg-map">false</span></h4>
+        </div>
+		    
+		    <div id="status-connection" class="statusmsg">
+          <h3>BLE-Status</h3>
+          <h4><span id="statusmsg-connection">false</span></h4>
+        </div>
+        
+		<button id="getOrientation" onclick="watchOrientation()">GET ORIENTATION</button>
 		
     	</div>
     </div>
@@ -150,13 +167,17 @@
     	</div>
     	
     	<div data-role="content" data-position="fixed">
-    	<ul data-role="listview" data-inset="false">
-    		<li><a href="#">Acura</a></li>
-    		<li><a href="#">Audi</a></li>
-    		<li><a href="#">BMW</a></li>
-    		<li><a href="#">Cadillac</a></li>
-    		<li><a href="#">FERRORI</a></li>
-		</ul>
+        <ul id="ble-devices-list" data-role="listview" data-inset="true"></ul>
+        
+        <div>
+        <div id="ble-scan-button" class="roundbutton" data-role="button" onclick="scanButton()"></div>
+        
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+        </div>
+        
     	</div>
     </div>
 	<!-- ********************************* -->
